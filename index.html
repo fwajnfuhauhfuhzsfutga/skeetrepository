@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Признаки делимости на 2, 4, 5, 10</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="header-top">
+        <div>
+          <p class="eyebrow">Шпаргалка и тренажёр</p>
+          <h1>1. Признаки делимости на 2, 4, 5, 10</h1>
+        </div>
+        <button id="randomize-all-btn" class="btn btn-primary" type="button">
+          <span class="btn-icon" aria-hidden="true">↻</span>
+          Новые числа
+        </button>
+      </div>
+      <nav class="tabs" aria-label="Разделы">
+        <button class="tab is-active" data-tab="sheet" type="button">Листок с правилами</button>
+        <button class="tab" data-tab="trainer" type="button">Тренажёр</button>
+        <button class="tab" data-tab="checker" type="button">Проверить число</button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Вкладка 1: Листок с рандомизированными примерами -->
+      <section id="tab-sheet" class="tab-panel is-active">
+        <div class="sheet-card">
+          <div class="sheet-legend">
+            <span><mark class="hl-yes">Зелёный</mark> — делится</span>
+            <span><mark class="hl-no">Красный</mark> — не делится</span>
+            <span class="legend-hint">Подчёркнуты цифры, на которые нужно смотреть</span>
+          </div>
+
+          <ul class="rules-list">
+            <li class="rule-item" data-rule="2">
+              <div class="rule-head">
+                <span class="rule-badge">На 2</span>
+                <button class="btn-mini" data-refresh="2" type="button" title="Обновить пример на 2">↻ Ещё пример</button>
+              </div>
+              <p class="rule-text">
+                Число оканчивается чётной цифрой — <strong>0, 2, 4, 6 или 8</strong>.
+                <span class="example-line" id="example-2"></span>
+              </p>
+            </li>
+
+            <li class="rule-item" data-rule="5">
+              <div class="rule-head">
+                <span class="rule-badge">На 5</span>
+                <button class="btn-mini" data-refresh="5" type="button" title="Обновить пример на 5">↻ Ещё пример</button>
+              </div>
+              <p class="rule-text">
+                Число оканчивается цифрой <strong>0 или 5</strong>.
+                <span class="example-line" id="example-5"></span>
+              </p>
+            </li>
+
+            <li class="rule-item" data-rule="10">
+              <div class="rule-head">
+                <span class="rule-badge">На 10</span>
+                <button class="btn-mini" data-refresh="10" type="button" title="Обновить пример на 10">↻ Ещё пример</button>
+              </div>
+              <p class="rule-text">
+                Число оканчивается цифрой <strong>0</strong>.
+                <span class="example-line" id="example-10"></span>
+              </p>
+            </li>
+
+            <li class="rule-item" data-rule="4">
+              <div class="rule-head">
+                <span class="rule-badge">На 4</span>
+                <button class="btn-mini" data-refresh="4" type="button" title="Обновить пример на 4">↻ Ещё пример</button>
+              </div>
+              <p class="rule-text">
+                Две последние цифры числа — <strong>нули</strong> или образуют число, которое <strong>делится на 4</strong>.
+                <span class="example-line" id="example-4"></span>
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Вкладка 2: Тренажёр -->
+      <section id="tab-trainer" class="tab-panel" hidden>
+        <div class="trainer-card">
+          <div class="trainer-controls">
+            <div class="filter-group" role="group" aria-label="Выбор делителя">
+              <button class="chip is-active" data-divisor="all" type="button">Все</button>
+              <button class="chip" data-divisor="2" type="button">На 2</button>
+              <button class="chip" data-divisor="4" type="button">На 4</button>
+              <button class="chip" data-divisor="5" type="button">На 5</button>
+              <button class="chip" data-divisor="10" type="button">На 10</button>
+            </div>
+            <div class="score-box">
+              <span>Верно: <strong id="score-correct">0</strong> / <strong id="score-total">0</strong></span>
+              <span class="streak">Серия: <strong id="score-streak">0</strong></span>
+            </div>
+          </div>
+
+          <div class="quiz-box">
+            <p class="quiz-prompt">Делится ли число <span id="quiz-divisor-label">на 2</span>?</p>
+            <div class="quiz-number" id="quiz-number">—</div>
+
+            <div class="quiz-actions">
+              <button id="ans-yes" class="btn btn-yes" type="button">Да, делится</button>
+              <button id="ans-no" class="btn btn-no" type="button">Нет, не делится</button>
+            </div>
+
+            <div id="quiz-feedback" class="quiz-feedback" hidden></div>
+
+            <button id="quiz-next" class="btn btn-secondary" type="button" hidden>Следующее число →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Вкладка 3: Проверка своего числа -->
+      <section id="tab-checker" class="tab-panel" hidden>
+        <div class="checker-card">
+          <label class="checker-label" for="custom-number-input">Введи любое натуральное число:</label>
+          <div class="checker-input-row">
+            <input
+              id="custom-number-input"
+              type="text"
+              inputmode="numeric"
+              placeholder="Например, 27032"
+              autocomplete="off"
+            />
+            <button id="checker-random-btn" class="btn btn-secondary" type="button">Случайное</button>
+          </div>
+          <div id="checker-results" class="checker-results"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
